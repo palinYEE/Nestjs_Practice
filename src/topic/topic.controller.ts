@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Redirect, UseGuards } from '@nestjs/common';
 import { TopicInfo } from 'src/templete/dtos/topicInfo.dto';
 import { TopicService } from './topic.service';
-import { CheckLogin, GetToken } from 'src/auth/suth.decorator';
+import { CheckLogin, GetToken } from 'src/auth/auth.decorator';
 import * as config from 'config';
 import { AuthGuard } from '@nestjs/passport';
 

@@ -1,5 +1,5 @@
 import { Controller, Get, Req } from '@nestjs/common';
-import { CheckLogin, GetToken } from 'src/auth/suth.decorator';
+import { CheckLogin, GetToken } from 'src/auth/auth.decorator';
 import { IndexService } from './index.service';
 
 /**

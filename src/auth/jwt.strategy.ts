@@ -5,6 +5,11 @@ import { AuthRepository } from "./auth.repository";
 import * as config from 'config';
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 
+/**
+ * request 쿠키에 있는 jwt 값을 반환하는 함수
+ * @param req request
+ * @returns jwt token
+ */
 let cookieExtractor = function(req) {
     var token = null;
     if (req && req.cookies) {
@@ -13,6 +18,9 @@ let cookieExtractor = function(req) {
     return token;
 };
 
+/**
+ * PassportStrategy 인증을 진행할때 사용할 전략을 정의
+ */
 @Injectable()
 export class CustomJwtStrategy extends PassportStrategy(Strategy) {
     constructor(

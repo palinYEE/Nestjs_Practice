@@ -9,14 +9,17 @@ import { TopicService } from './topic.service';
 
 @Module({
   imports:[
-    AuthModule
+    AuthModule                      /* 로그인 인증에 사용하는 커스텀 모듈 */
   ],
-  controllers: [TopicController],
+  controllers: [TopicController],   
   providers: [
-    TopicService,
-    TopicRepository,
+    /* Service Provider Setting */
+    TopicService,               
     TempleteService,
     JwtService,
+
+    /* Repository Provider Setting */
+    TopicRepository,
     AuthRepository
   ]
 })

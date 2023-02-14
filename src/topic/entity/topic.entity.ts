@@ -4,14 +4,14 @@ import { BaseEntity, Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColu
 @Entity()
 export class topicEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number;                         /* 고유 id */
 
     @Column()
-    title: string;
+    title: string;                      /* 게시판 제목 */
 
     @Column()
-    description: string;
+    description: string;                /* 게시판 내용 */
 
     @ManyToOne(type => authEntity, auth => auth.topics, {eager: false})
-    auth: authEntity
+    auth: authEntity                    /* 게시판을 작성한 사용자 id */
 }

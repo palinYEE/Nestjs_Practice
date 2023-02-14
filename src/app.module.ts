@@ -8,8 +8,8 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(typeORMConfig),
-    IndexModule, TempleteModule, TopicModule, AuthModule],
+    TypeOrmModule.forRoot(typeORMConfig),                   /* typeORM 을 사용하기 위한 셋팅을 import */
+    IndexModule, TempleteModule, TopicModule, AuthModule],  /* 사용할 모듈 import */
   controllers: [],
   providers: [],
 })

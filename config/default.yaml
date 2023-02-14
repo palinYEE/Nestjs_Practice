@@ -1,0 +1,16 @@
+server:
+  ip: 'localhost'
+  port: 3333
+
+db: 
+  type: 'postgres'
+  port: 5432
+  database: 'yyj_board_app'
+
+jwt:
+  expiresIn: 3600
+
+session:
+  secret: 'wins123'
+  resave: false
+  saveUninitialized: false

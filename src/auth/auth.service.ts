@@ -39,7 +39,7 @@ export class AuthService {
             <p>
                 <input type="submit" value="login">
             </p>
-            </form>`, '', '<a href="/auth/login">login</a> | <a href="/auth/register">Register</a>');
+            </form>`, '', this.templateService.StatusUiHtml(false, ''));
         return html
 
     }
@@ -63,7 +63,7 @@ export class AuthService {
                 <input type="submit" value="register">
             </p>
             </form>
-            `, '', '<a href="/auth/login">login</a> | <a href="/auth/register">Register</a>'
+            `, '', this.templateService.StatusUiHtml(false, '')
             );
         return html
     }

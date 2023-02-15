@@ -29,15 +29,8 @@ export class IndexService {
         const description = 'Hello, Nest.Js';
         const topiclist = await this.topicRepository.pageList();
         const list = this.templeteService.LIST(topiclist);
-
-        const tokenDecode = this.jwtService.decode(token);
-        let statusUi = '';
-        if(tokenDecode != null) {
-            statusUi = this.templeteService.StatusUI(checkOwner, tokenDecode['displayname']);
-        } else {
-            statusUi = this.templeteService.StatusUI(checkOwner, '');
-        }
-        const html = this.templeteService.HTML(title, list, `<h2>${title}</h2>${description}`,`<a href="/topic/create">create</a>`, statusUi);    
+        
+        const html = this.templeteService.HTML(title, list, `<h2>${title}</h2>${description}`,`<a href="/topic/create">create</a>`, this.templeteService.StatusUiHtml(checkOwner, token));    
         return html;
     }
 }

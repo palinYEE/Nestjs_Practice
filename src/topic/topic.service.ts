@@ -22,6 +22,8 @@ export class TopicService {
         private jwtService: JwtService    
     ){}
 
+
+
     /**
      * 게시판을 작성할 html을 생성해주는 함수
      * @param checkOwner 로그인 여부 
@@ -33,14 +35,6 @@ export class TopicService {
         const topiclist = await this.topicRepository.pageList();
         const list = this.templeteService.LIST(topiclist);
 
-        const tokenDecode = this.jwtService.decode(token);
-        let statusUi = ''
-        if(tokenDecode) {
-            statusUi = this.templeteService.StatusUI(checkOwner, tokenDecode['displayname']);
-        } else {
-            statusUi = this.templeteService.StatusUI(checkOwner, '');
-        }
-
         const html = this.templeteService.HTML(title, list, `
             <form action="/topic/create_process" method="post">
             <p><input type="text" name="title" placeholder="title"></p>
@@ -51,7 +45,8 @@ export class TopicService {
                 <input type="submit">
             </p>
             </form>
-        `, '', statusUi);
+        `, '', 
+        this.templeteService.StatusUiHtml(checkOwner, token));
         return html;
     }
 
@@ -82,14 +77,6 @@ export class TopicService {
         const topiclist = await this.topicRepository.pageList();
         const list = this.templeteService.LIST(topiclist);
 
-        const tokenDecode = this.jwtService.decode(token);
-        let statusUi = ''
-        if(tokenDecode) {
-            statusUi = this.templeteService.StatusUI(checkOwner, tokenDecode['displayname']);
-        } else {
-            statusUi = this.templeteService.StatusUI(checkOwner, '');
-        }
-
         const html = this.templeteService.HTML(title, list, 
             `<h2>${title}</h2>${description}`,
             `
@@ -101,7 +88,7 @@ export class TopicService {
                         <input type="hidden" name="id" value="${topic.id}">
                         <input type="submit" value="delete">
                         </form>
-            `, statusUi
+            `, this.templeteService.StatusUiHtml(checkOwner, token)
         );
         return html;
     }
@@ -131,14 +118,6 @@ export class TopicService {
         const topiclist = await this.topicRepository.pageList();
         const list = this.templeteService.LIST(topiclist);
 
-        const tokenDecode = this.jwtService.decode(token);
-        let statusUi = ''
-        if(tokenDecode) {
-            statusUi = this.templeteService.StatusUI(checkOwner, tokenDecode['displayname']);
-        } else {
-            statusUi = this.templeteService.StatusUI(checkOwner, '');
-        }
-
         const html = this.templeteService.HTML(title, list, 
             `
             <form action="/topic/update_process" method="post">
@@ -152,7 +131,7 @@ export class TopicService {
             </p>
             </form>
             `,
-            `<a href="/topic/create">create</a> <a href="/topic/update/${id}">update</a>`,statusUi
+            `<a href="/topic/create">create</a> <a href="/topic/update/${id}">update</a>`,this.templeteService.StatusUiHtml(checkOwner, token)
             );
         return html;
     }

@@ -19,7 +19,7 @@ let cookieExtractor = function(req) {
 };
 
 /**
- * PassportStrategy 인증을 진행할때 사용할 전략을 정의
+ * PassportStrategy 인증을 진행할 때 사용할 전략을 정의
  */
 @Injectable()
 export class CustomJwtStrategy extends PassportStrategy(Strategy) {

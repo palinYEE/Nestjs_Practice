@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Redirect, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Redirect, Req, Res, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { authDto } from './dtos/auth.dto';
@@ -39,7 +39,7 @@ export class AuthController {
      */
     @Post('/register_process')
     @Redirect()
-    async registerProcess(@Body() authdto: authDto): Promise<{url}> {
+    async registerProcess(@Body(ValidationPipe) authdto: authDto): Promise<{url}> {
         await this.authService.registerProcess(authdto);
         return {url: '/index'}
     }

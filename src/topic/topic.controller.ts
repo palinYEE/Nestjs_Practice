@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Redirect, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Redirect, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TopicInfo } from 'src/templete/dtos/topicInfo.dto';
 import { TopicService } from './topic.service';
 import { CheckLogin, GetToken } from 'src/auth/auth.decorator';
@@ -32,6 +32,7 @@ export class TopicController {
      * @returns db에 데이터를 저장하고 해당 topic 페이지로 redirect 한다.
      */
     @Post('/create_process')
+    @UsePipes(ValidationPipe)
     @Redirect()
     async createProcess(@Body() topicinfo: TopicInfo, @GetToken() token: string) {
         const server = config.get('server');
@@ -47,7 +48,7 @@ export class TopicController {
      */
     @Post('/delete_process')
     @Redirect()
-    async deleteProcess(@Body('id') id: number, @GetToken() token: string) {
+    async deleteProcess(@Body('id', ParseIntPipe) id: number, @GetToken() token: string) {
         await this.topicService.deleteProcess(id, token);
         return {url: `/index`};
     }
@@ -60,7 +61,7 @@ export class TopicController {
      * @returns topic title, description 정보를 수정할 수 있는 html string
      */
     @Get('/update/:id')
-    updatePage(@Param('id') id: number, @CheckLogin() checkOwner: Boolean, @GetToken() token: string): Promise<string> {
+    updatePage(@Param('id', ParseIntPipe) id: number, @CheckLogin() checkOwner: Boolean, @GetToken() token: string): Promise<string> {
         return this.topicService.updatePageId(id, checkOwner, token);
     }
 
@@ -72,8 +73,9 @@ export class TopicController {
      * @returns 해당 데이터를 수정한 후 해당 topic 게시판으로 redirect 한다.
      */
     @Post('/update_process')
+    @UsePipes(ValidationPipe)
     @Redirect()
-    async updateProcess(@Body('id') id: number, @Body() topicinfo: TopicInfo, @GetToken() token: string): Promise<{url}> {
+    async updateProcess(@Body('id',ParseIntPipe) id: number, @Body() topicinfo: TopicInfo, @GetToken() token: string): Promise<{url}> {
         await this.topicService.updateProcess(id, topicinfo, token);
         return {url: `/topic/${id}`}
     }
